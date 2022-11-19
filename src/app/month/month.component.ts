@@ -6,12 +6,12 @@ import {
 } from '@angular/core';
 // @ts-ignore
 import {  SohoModalDialogService, SohoModalDialogRef, SohoCalendarComponent, SohoToastService } from 'ids-enterprise-ng';
- 
+
 
 
 @Component({
   selector: 'app-month',
-  templateUrl: 'month.component.html', 
+  templateUrl: 'month.component.html',
 
 })
 export class MonthComponent   {
@@ -23,48 +23,48 @@ export class MonthComponent   {
   @ViewChild(SohoCalendarComponent) sohoCalendarComponent?: SohoCalendarComponent;
 
   public initialMonth = 10;
-  public holiday = "holiday";
+  public holiday = 'holiday';
   public initialYear = 2022;
   public showViewChanger = true;
-  public eventTypes:any[]=[];
+  public eventTypes: any[]=[];
   public events: any[]=[];
   public dayofweeks=5;
   public iconTooltip = 'status';
-  public eventTooltip = 'comments'; 
-  public EncourEvent:any; 
- 
+  public eventTooltip = 'comments';
+  public EncourEvent: any;
+
   public legendEventtypes   = {
-    "id": "admin",
-    "label": "Team Event",
-    "translationKey": "AdministrativeLeave",
-    "color": "emerald",
-    "checked": true, 
-  }; 
- 
+    id: 'admin',
+    label: 'Team Event',
+    translationKey: 'AdministrativeLeave',
+    color: 'emerald',
+    checked: true,
+  };
+
   public closeResult = '(N/A)';
   public title = 'DayLegend';
 
   constructor(private modalService: SohoModalDialogService, private toastService: SohoToastService) {
     this.eventTypes.push(this.legendEventtypes);
-   } 
+   }
     public onCalendarDateSelectedCallback = (_node: Node, args: SohoCalendarDateSelectedEvent) => {
     console.log('onCalendarEventSelectedCallback', args);
-  }
- 
+  };
+
   public onRenderMonthCallback = (_node: Node, response: Function) => {
-   
+
     response(this.events,null);
-   
-  }
+
+  };
 
   onSelected(event: SohoCalendarDateSelectedEvent) {
    this.EncourEvent=event;
   }
   dblclick() {
-    console.log(EventTarget)
+    console.log(EventTarget);
      this.openMessage(this.EncourEvent);
   }
-  openMessage(_event:any) {
+  openMessage(_event: any) {
     const dialogRef = this.modalService
       .message('<span class="message">Add New Day Legend</span>')
       .buttons(
@@ -76,24 +76,30 @@ export class MonthComponent   {
           },
           {
             text: 'Submit', click: () => {
-              let id=this.events[this.events.length-1].id+1
-              let  legendEvent = {
-                id: id,
-                subject: "",
-                comments: "",
-                starts: "",
-                ends: "",
-                type: "tdo",
-                status: "Approved",
-                isAllDay: false,
-                color: "#2DB329"
+              let idSubmit = 0;
+              if(this.events.length > 0){
+                idSubmit=this.events[this.events.length-1].id+1;
+              }
+              console.log("idSubmit : "+idSubmit);
+
+              const  legendEvent = {
+                id:idSubmit,
+                subject: '',
+                comments: '',
+                starts: '',
+                ends: '',
+                type: 'tdo',
+                status: 'Approved',
+                isAllDay: 'true',
+                color: '#2DB329'
               };
-              let dateSelect=new Date(_event.year,_event.month,_event.day)
-              legendEvent.starts=this.FormatDate(dateSelect,1)
-              legendEvent.ends=this.FormatDate(dateSelect,2)
-              this.events.push(legendEvent)   
+              const dateSelect=new Date(_event.year,_event.month,_event.day);
+              legendEvent.starts=this.FormatDate(dateSelect,1);
+              legendEvent.ends=this.FormatDate(dateSelect,2);
+              this.events.push(legendEvent)   ;
+              console.log("this.events : "+JSON.stringify(this.events));
+
               dialogRef.close('SUBMIT');
-              
             },
              isDefault: true
           }
@@ -102,8 +108,8 @@ export class MonthComponent   {
       .open()
       .afterClose((result: any) => {
         this.closeResult = result;
-         
-       
+
+
       });
   }
   onEventClicked(event: SohoCalendarEventClickEvent) {
@@ -122,28 +128,28 @@ export class MonthComponent   {
       console.log('onEventContextMenu', event);
     }
   }
-  addItem(newItem: any) { 
-    this.events=newItem; 
+  addItem(newItem: any) {
+    this.events=newItem;
   }
   FormatDate(date: Date, HowDate: number) {
-    let day = date.getDate();
-    let monthIndex = (date.getMonth()+1);
-    let year = date.getFullYear();
-    let dayString="";
-    let monthIndexString="";
+    const day = date.getDate();
+    const monthIndex = (date.getMonth()+1);
+    const year = date.getFullYear();
+    let dayString='';
+    let monthIndexString='';
     if (day < 10)
-      dayString = "-0" + day.toString();
-      else 
-      dayString="-"+day.toString();
+      {dayString = '-0' + day.toString();}
+      else
+      {dayString='-'+day.toString();}
 
     if (monthIndex <10)
-      monthIndexString = "-0" + monthIndex; 
-    else 
-      monthIndexString="-"+monthIndex.toString();
+      {monthIndexString = '-0' + monthIndex;}
+    else
+      {monthIndexString='-'+monthIndex.toString();}
 
     if (HowDate == 2) {
-      return year +monthIndexString+  dayString + "T23:59:59.999";
+      return year +monthIndexString+  dayString + 'T23:59:59.999';
     }
-    return year +  monthIndexString +  dayString + "T00:00:00.000";
+    return year +  monthIndexString +  dayString + 'T00:00:00.000';
   }
 }
