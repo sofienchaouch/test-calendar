@@ -38,8 +38,8 @@ export class DayLegendComponent implements OnInit {
     startDate: '',
     EndDate: ''
   };
-  public tableRangeDate:any[]=[];
-  public tableDay:any[]=[];
+  public tableRangeDate: any[]=[];
+  public tableDay: any[]=[];
   public modelcheckBox = {
     monday: true,
     thursday: true,
@@ -50,7 +50,7 @@ export class DayLegendComponent implements OnInit {
     sunday: true,
   };
   public sunday = 'Sunday';
-  public monday = 'Monday';  
+  public monday = 'Monday';
   public tuesday = 'Tuesday';
   public wednesday = 'Wednesday';
   public thursday = 'Thursday';
@@ -60,14 +60,14 @@ export class DayLegendComponent implements OnInit {
   public checkBoxDisabled = false;
   public legendEvent = {
     "id": 0,
-    "subject": "",
-    "comments": "",
-    "starts": "",
-    "ends": "",
-    "type": "admin",
-    "status": "Approved",
-    "isAllDay": false,
-    "color": " #2DB329"
+    "subject": '',
+    "comments": '',
+    "starts": '',
+    "ends": '',
+    "type": 'admin',
+    "status": 'Approved',
+    "isAllDay": 'true',
+    "color": '#ABEBC6'
   };
 
 
@@ -124,66 +124,72 @@ export class DayLegendComponent implements OnInit {
   }
 
   getRange() {
-    console.log(this.modelcheckBox)
+    console.log(this.modelcheckBox);
     this.tableRangeDate=[];
-    let startDate = new Date(this.modeldatepicker.startDate);
-    let EndDate = new Date(this.modeldatepicker.EndDate);
-    let DayNumber=this.getDiffDays(startDate, EndDate)
+    const startDate = new Date(this.modeldatepicker.startDate);
+    const EndDate = new Date(this.modeldatepicker.EndDate);
+    const DayNumber=this.getDiffDays(startDate, EndDate);
   //  this.RangeDate.startDate = this.FormatDate(startDate, 1);
    // this.RangeDate.EndDate = this.FormatDate(EndDate, 2);
-   this.getRangeDate(startDate, EndDate,DayNumber)
+   this.getRangeDate(startDate, EndDate,DayNumber);
     this.startDateToCalendary.emit(this.tableRangeDate);
   }
   FormatDate(date: Date, HowDate: number) {
-    let day = date.getDate();
-    let monthIndex = (date.getMonth()+1);
-    let year = date.getFullYear();
-    let dayString="";
-    let monthIndexString="";
+    const day = date.getDate();
+    const monthIndex = (date.getMonth()+1);
+    const year = date.getFullYear();
+    let dayString='';
+    let monthIndexString='';
     if (day < 10)
-      dayString = "-0" + day.toString();
-      else 
-      dayString="-"+day.toString();
+      {dayString = '-0' + day.toString();}
+      else
+      {dayString='-'+day.toString();}
 
     if (monthIndex <10)
-      monthIndexString = "-0" + monthIndex; 
-    else 
-      monthIndexString="-"+monthIndex.toString();
+      {monthIndexString = '-0' + monthIndex;}
+    else
+      {monthIndexString='-'+monthIndex.toString();}
 
+    // eslint-disable-next-line eqeqeq
     if (HowDate == 2) {
-      return year +monthIndexString+  dayString + "T23:59:59.999";
+      console.log('endate : '+year +monthIndexString+  dayString + 'T23:59:59.999');
+      return year +monthIndexString+  dayString + 'T23:59:59.999';
     }
-    return year +  monthIndexString +  dayString + "T00:00:00.000";
+
+    // eslint-disable-next-line @typescript-eslint/quotes
+    console.log("startdate : "+year +monthIndexString+  dayString + "T00:00:00.000");
+
+    return year +  monthIndexString +  dayString + 'T00:00:00.000';
   }
 
-  getRangeDate(startDate:any, endDate:any,numberDay:number){
+  getRangeDate(startDate: any, endDate: any,numberDay: number){
 
-   
+
     let  legendEvent = {
-      id: 0,
-      subject: "",
-      comments: "",
-      starts: "",
-      ends: "",
-      type: "tdo",
-      status: "Approved",
-      isAllDay: false,
-      color: "#2DB329"
-    }
-    startDate.setDate( startDate.getDate() - 1 );  
-    
+      "id": 0,
+      "subject": '',
+      "comments": '',
+      "starts": '',
+      "ends": '',
+      "type": 'tdo',
+      "status": 'Approved',
+      "isAllDay": 'true',
+      "color": '#ABEBC6'
+    };
+    startDate.setDate( startDate.getDate() - 1 );
+
     for (let index =1; index <= numberDay; index++) {
       let addEvent=false;
       legendEvent = {
-        id: 0,
-        subject: "",
-        comments: "",
-        starts: "",
-        ends: "",
-        type: "tdo",
-        status: "Approved",
-        isAllDay: false,
-        color: "#2DB329"
+        "id": 0,
+        "subject": '',
+        "comments": '',
+        "starts": '',
+        "ends": '',
+        "type": 'tdo',
+        "status": 'Approved',
+        "isAllDay": 'true',
+        "color": '#ABEBC6'
       };
       startDate.setDate( startDate.getDate() + 1 );
       if((this.modelcheckBox.monday)&&(startDate.getDay()==1))
@@ -206,22 +212,23 @@ export class DayLegendComponent implements OnInit {
       {
         addEvent=true;
       }
-     
+
       if(addEvent)
       {
         legendEvent.id =index+1;
         legendEvent.starts = this.FormatDate(startDate, 1);
         legendEvent.ends = this.FormatDate(startDate, 2);
         this.tableRangeDate.push(legendEvent);
+        console.log("tableRangeDate :"+JSON.stringify(this.tableRangeDate));
       }
-    
+
     }
   }
- getDiffDays(startDate:any, endDate:any) {
+ getDiffDays(startDate: any, endDate: any) {
     return Math.ceil(Math.abs(startDate - endDate) / (1000 * 60 * 60 * 24));
   }
- getDaysIgnore(day:any) {
-   console.log(this.modelcheckBox)
-    
+ getDaysIgnore(day: any) {
+   console.log(this.modelcheckBox);
+
   }
 }
