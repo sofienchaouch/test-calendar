@@ -13,6 +13,7 @@ import { RouterModule } from '@angular/router';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { DayLegendComponent } from './day-legend/day-legend.component';
 
 @NgModule({
   declarations: [
@@ -20,6 +21,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     HeaderComponent,
     PersonalizeMenuComponent,
     MonthComponent,
+    DayLegendComponent,
 
   ],
   imports: [

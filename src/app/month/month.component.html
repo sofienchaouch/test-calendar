@@ -1,93 +1,32 @@
 
-    <div class="row">
-      <mat-form-field appearance="fill">
-        <mat-label>Type</mat-label>
-        <select matNativeControl required>
-          <option value="DayLegend">DayLegend</option>
-          <option value="NA">NA</option>
-      
-        </select>
-      </mat-form-field>
-    </div>
-
-
-    <div class="row">
-      <div class="two columns">
-        <div class="field">
-          <label for="dynamicLegend" class="label">Start</label>
-          <input soho-datepicker #dynamicLegend id="dynamicLegend" name="dynamicLegend" dateFormat="MM/dd/yyyy" mode="standard" placeholder="MM/dd/yyyy" />
-          <label for="dynamicLegend" class="label">End</label>
-          <input soho-datepicker #dynamicLegend id="dynamicLegend" name="dynamicLegend" dateFormat="MM/dd/yyyy" mode="standard" placeholder="MM/dd/yyyy" />
-
-        </div>
-      </div>
-    </div>
-  
-
-    <div class="row">
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="monday" name="monday" >
-          <label soho-label for="monday" [forCheckBox]="true">monday</label>
-        </div>
-      </div>
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="tuesday" name="tuesday" >
-          <label soho-label for="tuesday" >tuesday</label>
-        </div>
-      </div>
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="wednesday" name="wednesday" >
-          <label soho-label for="wednesday" [forCheckBox]="true">wednesday</label>
-        </div>
-      </div>
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="thursday" name="thursday" >
-          <label soho-label for="thursday" >thursday</label>
-        </div>
-      </div>
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="friday" name="friday" >
-          <label soho-label for="friday" [forCheckBox]="true">friday</label>
-        </div>
-      </div>
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="saturday" name="saturday" >
-          <label soho-label for="saturday" >saturday</label>
-        </div>
-      </div>
-      <div class="two columns">
-        <div class="field">
-          <input soho-checkbox type="checkbox" id="sunday" name="sunday" >
-          <label soho-label for="sunday" >sunday</label>
-        </div>
-      </div>
-    </div>
-
-
-
-
+<app-day-legend (startDateToCalendary)="addItem($event)"></app-day-legend>
 <div soho-calendar
-    [month]="initialMonth"
-    [year]="initialYear"
-    [showViewChanger]="showViewChanger"
-    [selectedCallback]="onCalendarDateSelectedCallback"
+   [events]="events"
+   [eventTypes]="eventTypes"
+   [month]="initialMonth"
+   [year]="initialYear" 
+   [showViewChanger]="showViewChanger"
+   [selectedCallback]="onCalendarDateSelectedCallback"
+   [firstDayOfWeek]="1"
+   [disable]="{dayOfWeek: [0,6]}"  
+   (selected)="onSelected($event)" 
+   (dblclick)="dblclick()" 
  
-    (selected)="onSelected($event)"
-    (eventClick)="onEventClicked($event)"
-    (eventDblClick)="onEventDblClicked($event)"
-     (eventContextMenu)="onCalendarEventContextMenu($event)"
-     [eventTooltip]="eventTooltip"
-     [iconTooltip]="iconTooltip"
+   (eventClick)="onEventClicked($event)"
+   (eventDblClick)="onEventDblClicked($event)" 
+    (eventContextMenu)="onCalendarEventContextMenu($event)"
+    [eventTooltip]="eventTooltip"
+    [iconTooltip]="iconTooltip"
+    [renderMonthCallback]="onRenderMonthCallback"
+    
+   
 >
-  <div soho-calendar-monthview></div>
-  <div soho-calendar-week-view></div>
+
+
+ <div soho-calendar-monthview>  
+    
+</div>
+ <div soho-calendar-week-view></div>
+
 </div>
 
-
- 
