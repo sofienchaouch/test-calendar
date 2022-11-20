@@ -129,9 +129,8 @@ export class DayLegendComponent implements OnInit {
     const startDate = new Date(this.modeldatepicker.startDate);
     const EndDate = new Date(this.modeldatepicker.EndDate);
     const DayNumber=this.getDiffDays(startDate, EndDate);
-  //  this.RangeDate.startDate = this.FormatDate(startDate, 1);
-   // this.RangeDate.EndDate = this.FormatDate(EndDate, 2);
-   this.getRangeDate(startDate, EndDate,DayNumber);
+
+    this.getRangeDate(startDate, EndDate,DayNumber);
     this.startDateToCalendary.emit(this.tableRangeDate);
   }
   FormatDate(date: Date, HowDate: number) {

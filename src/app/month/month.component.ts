@@ -1,7 +1,9 @@
 import {
   Component,
+  EventEmitter,
   HostBinding,
   OnInit,
+  Output,
   ViewChild
 } from '@angular/core';
 // @ts-ignore
@@ -19,6 +21,7 @@ export class MonthComponent   {
   @HostBinding('style.overflow') overflow = 'auto';
   @HostBinding('style.height') height = 'auto';
   @HostBinding('style.display') block = 'block';
+  @Output() startDateToCalendary = new EventEmitter<any>();
 
   @ViewChild(SohoCalendarComponent) sohoCalendarComponent?: SohoCalendarComponent;
 
@@ -83,22 +86,23 @@ export class MonthComponent   {
               console.log("idSubmit : "+idSubmit);
 
               const  legendEvent = {
-                id:idSubmit,
-                subject: '',
-                comments: '',
-                starts: '',
-                ends: '',
-                type: 'tdo',
-                status: 'Approved',
-                isAllDay: 'true',
-                color: '#2DB329'
+                "id": idSubmit,
+                "subject": '',
+                "comments": '',
+                "starts": '',
+                "ends": '',
+                "type": 'tdo',
+                "status": 'Approved',
+                "isAllDay": 'true',
+                "color": '#ABEBC6'
               };
               const dateSelect=new Date(_event.year,_event.month,_event.day);
               legendEvent.starts=this.FormatDate(dateSelect,1);
               legendEvent.ends=this.FormatDate(dateSelect,2);
               this.events.push(legendEvent)   ;
-              console.log("this.events : "+JSON.stringify(this.events));
+              this.startDateToCalendary.emit(legendEvent.starts);
 
+              console.log("this.events : "+JSON.stringify(this.events));
               dialogRef.close('SUBMIT');
             },
              isDefault: true
